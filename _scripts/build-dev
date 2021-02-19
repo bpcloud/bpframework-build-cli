@@ -23,9 +23,9 @@ exports.run = function (workdir) {
     return path.join(workdir, ...paths);
   }
 
-  febs.file.dirAssure(resolveDistPath('config'));
-  febs.file.fileRemove(resolveDistPath('config', 'bootstrap.yml'));
-  febs.file.fileCopy(resolveSrcPath('config', 'bootstrap.yml'), resolveDistPath('config', 'bootstrap.yml'));
+  febs.file.dirAssure(resolveDistPath('resource'));
+  febs.file.dirRemoveRecursive(resolveDistPath('resource'));
+  febs.file.dirCopy(resolveSrcPath('resource'), resolveDistPath('resource'));
   febs.file.fileRemove(resolveDistPath('package.json'));
   febs.file.fileCopy(resolveSrcPath('package.json'), resolveDistPath('package.json'));
 
@@ -42,7 +42,7 @@ exports.run = function (workdir) {
     mode: "development",
     devtool: os.platform().indexOf('win') == 0 ? "source-map" : "source-map",
     entry: [
-      '@babel/polyfill', resolveSrcPath('main.ts')
+      '@babel/polyfill', resolveSrcPath('src/main.ts')
     ],
     output: {
       path: resolveDistPath(),
@@ -52,7 +52,7 @@ exports.run = function (workdir) {
       // Add `.ts` and `.tsx` as a resolvable extension.
       extensions: ['.ts', '.tsx', '.js'],
       alias: {
-        '@': resolveSrcPath(),
+        '@': resolveSrcPath("src"),
       }
     },
     target: 'node',
@@ -86,9 +86,5 @@ exports.run = function (workdir) {
     febs.file.fileCopy(path.join(__dirname, 'app.dev.js'), resolveDistPath('app.dev.js'));
     febs.file.fileRemove(resolveDistPath('app-cron.dev.js'));
     febs.file.fileCopy(path.join(__dirname, 'app-cron.dev.js'), resolveDistPath('app-cron.dev.js'));
-    febs.file.dirRemoveRecursive(resolveDistPath('locales'));
-    if (febs.file.dirIsExist(resolveSrcPath('locales'))) {
-      febs.file.dirCopy(resolveSrcPath('locales'), resolveDistPath('locales'));
-    }
   });
 }
