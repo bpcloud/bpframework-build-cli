@@ -5,7 +5,7 @@ function done(args, workDir) {
 
   console.log('');
   console.log('**************************************************************');
-  console.log('> Will build project');
+  console.log('> Will build project: development');
   console.log('**************************************************************');
   console.log('');
 

@@ -23,11 +23,14 @@ exports.run = function (workdir) {
   }
 
 
-  febs.file.dirAssure(resolveDistPath('resource'));
   febs.file.dirRemoveRecursive(resolveDistPath('resource'));
+  febs.file.dirAssure(resolveDistPath('resource'));
   febs.file.dirCopy(resolveSrcPath('resource'), resolveDistPath('resource'));
   febs.file.fileRemove(resolveDistPath('package.json'));
   febs.file.fileCopy(resolveSrcPath('package.json'), resolveDistPath('package.json'));
+  febs.file.fileRemove(resolveDistPath('readme.md'));
+  febs.file.fileCopy(resolveSrcPath('readme.md'), resolveDistPath('readme.md'));
+  febs.file.dirAssure(resolveDistPath('libs'));
 
   var nodeModules = {};
   fs.readdirSync('node_modules')
@@ -46,7 +49,7 @@ exports.run = function (workdir) {
     ],
     output: {
       path: resolveDistPath(),
-      filename: 'libs.js'
+      filename: 'libs/libs.js'
     },
     resolve: {
       // Add `.ts` and `.tsx` as a resolvable extension.
@@ -91,9 +94,9 @@ exports.run = function (workdir) {
     }));
     spinner.stop();
 
-    febs.file.fileRemove(resolveDistPath('app.js'));
-    febs.file.fileCopy(path.join(__dirname, 'app.js'), resolveDistPath('app.js'));
-    febs.file.fileRemove(resolveDistPath('app-cron.js'));
-    febs.file.fileCopy(path.join(__dirname, 'app-cron.js'), resolveDistPath('app-cron.js'));
+    febs.file.fileRemove(resolveDistPath('libs/app.js'));
+    febs.file.fileRemove(resolveDistPath('libs/app-cron.js'));
+    febs.file.fileCopy(path.join(__dirname, 'app.js'), resolveDistPath('libs/app.js'));
+    febs.file.fileCopy(path.join(__dirname, 'app-cron.js'), resolveDistPath('libs/app-cron.js'));
   });
 }
