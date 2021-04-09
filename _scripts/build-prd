@@ -8,6 +8,7 @@ var path = require('path');
 var ora     = require('ora');
 var febs     = require('febs');
 const TerserPlugin = require('terser-webpack-plugin');
+var nodeExternals = require('webpack-node-externals');
 
 var spinner = ora('Build... ');
 
@@ -59,7 +60,7 @@ exports.run = function (workdir) {
       }
     },
     target: 'node',
-    externals: nodeModules,
+    externals: [nodeExternals()],
     optimization: {
       minimize: true,
       minimizer: [new TerserPlugin({
