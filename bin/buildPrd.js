@@ -1,6 +1,6 @@
 'use strict';
 
-function done(args, workDir) {
+function done(args, options, workDir) {
   workDir = workDir || process.cwd();
 
   console.log('');
@@ -9,7 +9,9 @@ function done(args, workDir) {
   console.log('**************************************************************');
   console.log('');
 
-  require('../_scripts/build-prd').run(workDir);
+  var bundleAll = options.indexOf('--bundleAll') >= 0;
+
+  require('../_scripts/build-prd').run(workDir, bundleAll);
 }
 
 

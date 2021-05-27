@@ -13,7 +13,7 @@ var nodeExternals = require('webpack-node-externals');
 
 var spinner = ora('Build... ');
 
-exports.run = function (workdir) {
+exports.run = function (workdir, bundleAll) {
   console.log(workdir)
   
   function resolveDistPath(...paths) {
@@ -60,7 +60,12 @@ exports.run = function (workdir) {
       }
     },
     target: 'node',
-    externals: [nodeExternals()],
+    externals: [nodeExternals({
+      allowlist: bundleAll ? /.*/ : [
+        '@babel/polyfill',
+        /core-js\/.*/,
+      ]
+    })],
     module: {
       rules: [
         {

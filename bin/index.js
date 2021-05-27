@@ -28,17 +28,29 @@ function run() {
     return;
   }
 
-  command[0].done(args);
+  var options = args.slice(1);
+  
+  command[0].done(args, options);
 }
 
 function printUsage() {
   console.log([
-    'Usage: bpframework <command>',
+    '',
+    'Usage: bpframework-build <command> [Options]',
     '',
     'Commands:'
   ].concat(Object.keys(commands).map(function(name) {
-    return '  - ' + name + ': ' + commands[name][1];
-  })).join('\n'));
+    return '  ' + name + ': ' + commands[name][1];
+  }))
+    .concat([
+      '',
+      'Options:',
+      '  --bundleAll: bundle all dependency',
+      '',
+    ])
+    .join('\n')
+  
+  );
   process.exit(1);
 }
 
