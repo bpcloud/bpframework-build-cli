@@ -9,7 +9,11 @@
 
 //
 // enable Scheduling task.
-global.enableScheduled = true;
+global.__enableScheduled = true;
+
+//
+// debug feignClient; use url.
+global.__debugFeignClient = true;
 
 // application entry.
 require('./libs-dev');
