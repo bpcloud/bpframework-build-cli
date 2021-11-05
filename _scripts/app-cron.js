@@ -7,6 +7,7 @@
 * Desc: use babel in nodejs.
 */
 
+global.__debug = false;
 
 //
 // enable Scheduling task.
